@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f3ba9ac70348f2b489eaf02556c5062b
+guid: 4527fb4de515b8944882b32cb0941b62
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8275874689432329328
-    second: Emoji_Spritesheet_Free-fotor-20250805161554_0
+      213: -2132260037848376413
+    second: pixil-frame-1 (1)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Emoji_Spritesheet_Free-fotor-20250805161554_0
+      name: pixil-frame-1 (1)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 30
-        height: 28
+        x: 63
+        y: 63
+        width: 1474
+        height: 674
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 07c924dbe20d9d270800000000000000
-      internalID: 8275874689432329328
+      spriteID: 3ab5943fac0b862e0800000000000000
+      internalID: -2132260037848376413
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Emoji_Spritesheet_Free-fotor-20250805161554_0: 8275874689432329328
+      pixil-frame-1 (1)_0: -2132260037848376413
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
