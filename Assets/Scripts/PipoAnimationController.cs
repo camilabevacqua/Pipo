@@ -11,7 +11,7 @@ public class PipoAnimationController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        
+        stats = StatsPlayer.instance;
 
         transform.localScale = Vector3.one * baseScale;
     }
