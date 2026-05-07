@@ -2,28 +2,38 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using System.Collections;
-
+using TMPro;
+using UnityEngine.SceneManagement;
 public class SimonSaysManager : MonoBehaviour
-{// Eventos que escucha tu SimonSaysManagerUI existente
+{
+    [SerializeField] private TextMeshProUGUI scoreText;
+    public static SimonSaysManager Instance { get; private set; } // Para que otros scripts lo encuentren
+    [SerializeField] private GameObject gameOverPanel;
+
     public event EventHandler OnWinGame;
     public event EventHandler OnLoseGame;
 
     [Header("Configuración del Juego")]
-    // Arrastra aquí tus 4 objetos que tienen el script SimonButtonVisuals
     [SerializeField] private SimonButton[] buttonVisuals;
 
-    // Estos valores podrías cambiarlos externamente según la dificultad
-    [SerializeField] private float displayDelay = 0.6f; // Tiempo entre flasheos
-    [SerializeField] private int roundsToWin = 5; // Cuántas secuencias hay que adivinar para ganar
+    [Header("Valores actuales (se cambian por dificultad)")]
+    [SerializeField] private float displayDelay = 0.6f;
+    [SerializeField] private int roundsToWin = 5;
 
-    // Lógica interna
+    [SerializeField] private float speedMultiplier = 0.95f; // Reduce el delay un 5% cada ronda
+    [SerializeField] private float minDelay = 0.2f;
+
     private List<int> sequence = new List<int>();
     private int playerStep = 0;
     private bool inputEnabled = false;
+    [SerializeField] private GameObject difficultyPanel;
+    private void Awake()
+    {
+        Instance = this; // Se asigna a sí mismo al nacer
+    }
 
     private void Start()
     {
-        // Vinculamos dinámicamente el clic de cada botón a nuestra función de validación
         foreach (var visual in buttonVisuals)
         {
             if (visual != null && visual.Button != null)
@@ -33,99 +43,106 @@ public class SimonSaysManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    // --- NUEVO: Este método lo llamarás desde tus botones de dificultad ---
+    public void SetRounds(int rounds)
     {
-        // Buena práctica: desvincular los listeners al destruir el objeto
-        foreach (var visual in buttonVisuals)
-        {
-            if (visual != null && visual.Button != null)
-            {
-                visual.Button.onClick.RemoveAllListeners();
-            }
-        }
+        roundsToWin = rounds;
     }
 
-    // Este método lo activa el SimonSaysManagerUI al habilitar el área de juego
-    private void OnEnable()
+    public void SetSpeed(float delay)
     {
-        StartGame();
+        displayDelay = delay;
     }
 
-    public void StartGame()
+
+
+    public void StartSimonGame()
     {
         sequence.Clear();
         playerStep = 0;
+        UpdateScoreDisplay();
         NextRound();
     }
 
     private void NextRound()
     {
         playerStep = 0;
-        inputEnabled = false; // Deshabilitamos input mientras se muestra la secuencia
+        inputEnabled = false;
+        if (displayDelay > minDelay)
+        {
+            displayDelay *= speedMultiplier;
+        }
 
-        // Agrega un nuevo botón aleatorio (0-3) a la secuencia
         sequence.Add(UnityEngine.Random.Range(0, buttonVisuals.Length));
-
+        UpdateScoreDisplay();
         StartCoroutine(PlaySequence());
     }
-
-    private IEnumerator PlaySequence()
+    private void UpdateScoreDisplay()
     {
-        // Pequeña pausa antes de empezar para que el jugador se prepare
-        yield return new WaitForSeconds(0.8f);
+        if (scoreText != null)
+        {
+            // Usamos sequence.Count porque representa la ronda actual
+            scoreText.text = "Ronda: " + sequence.Count.ToString();
+        }
+    }
 
+private IEnumerator PlaySequence()
+    {
+        yield return new WaitForSeconds(0.8f);
         foreach (int index in sequence)
         {
-            // Buscamos el visual que corresponde al índice en la secuencia
             SimonButton targetVisual = GetVisualByIndex(index);
             if (targetVisual != null)
             {
                 yield return StartCoroutine(targetVisual.Flash(displayDelay));
-                // Pausa corta entre un botón y el siguiente
                 yield return new WaitForSeconds(displayDelay * 0.4f);
             }
         }
-
-        // La secuencia terminó, ahora el jugador puede interactuar
         inputEnabled = true;
     }
 
-    // Función que se ejecuta cuando el jugador presiona un botón
     private void OnPlayerClick(int index)
     {
-        if (!inputEnabled) return; // Si no es el turno del jugador, ignorar
+        if (!inputEnabled) return;
 
-        // Verificamos si presionó el botón correcto según la secuencia
         if (index == sequence[playerStep])
         {
-            // Correcto! Hacemos un flasheo rápido del botón
+            // Correcto: Flasheo rápido del botón que tocó el jugador
             StartCoroutine(GetVisualByIndex(index).Flash(0.25f));
             playerStep++;
 
-            // ¿Completó toda la secuencia actual?
+            // Si completó toda la secuencia actual de esta ronda
             if (playerStep >= sequence.Count)
             {
-                // ¿Llegó a la ronda final necesaria para ganar?
-                if (sequence.Count >= roundsToWin)
-                {
-                    OnWinGame?.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    // Siguiente ronda (agrega un botón más)
-                    NextRound();
-                }
+                // Bloqueamos el input para que no toque nada mientras se genera la siguiente
+                inputEnabled = false;
+                NextRound();
             }
         }
         else
         {
-            // Incorrecto! Fin del juego.
+            // INCORRECTO: Perdió
             inputEnabled = false;
+
+            // Lanzamos el evento por si otros scripts (como sonidos de Wwise) están escuchando
             OnLoseGame?.Invoke(this, EventArgs.Empty);
+
+            // ACTIVAMOS EL PANEL DE DERROTA (GameOver)
+            if (gameOverPanel != null)
+            {
+                gameOverPanel.SetActive(true);
+            }
+
+            // El panel de dificultad se queda apagado hasta que toque "Retry"
+            if (difficultyPanel != null)
+            {
+                difficultyPanel.SetActive(false);
+            }
+
+            Debug.Log("Pipo perdió en la ronda: " + sequence.Count);
         }
     }
 
-    // Función auxiliar para encontrar el SimonButtonVisuals con el índice correcto
     private SimonButton GetVisualByIndex(int index)
     {
         foreach (var visual in buttonVisuals)
@@ -133,5 +150,21 @@ public class SimonSaysManager : MonoBehaviour
             if (visual.Index == index) return visual;
         }
         return null;
+    }
+    public void RetryGame()
+    {
+        gameOverPanel.SetActive(false); // Cerramos el de derrota
+        difficultyPanel.SetActive(true); // Abrimos el de dificultad
+        sequence.Clear(); // Limpiamos la partida anterior
+    }
+
+    // Opción B: Reiniciar la escena completa (o volver a la principal)
+    public void BackToGameScene()
+    {
+        // Esto recarga la escena actual en la que estás
+        SceneManager.LoadScene("Playground");
+
+        // Si tenés una escena específica de Pipo, podés usar:
+        // SceneManager.LoadScene("NombreDeTuEscena");
     }
 }
