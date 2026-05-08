@@ -8,6 +8,7 @@ TagManager:
   - Bathtub
   - Wall
   - PauseMenu
+  - Suelo
   layers:
   - Default
   - TransparentFX

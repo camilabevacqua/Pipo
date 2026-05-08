@@ -20,7 +20,7 @@ public class SimonSaysManager : MonoBehaviour
     [SerializeField] private float displayDelay = 0.6f;
     [SerializeField] private int roundsToWin = 5;
 
-    [SerializeField] private float speedMultiplier = 0.95f; // Reduce el delay un 5% cada ronda
+    [SerializeField] private float speedMultiplier = 0.95f; 
     [SerializeField] private float minDelay = 0.2f;
 
     private List<int> sequence = new List<int>();
@@ -29,7 +29,7 @@ public class SimonSaysManager : MonoBehaviour
     [SerializeField] private GameObject difficultyPanel;
     private void Awake()
     {
-        Instance = this; // Se asigna a sí mismo al nacer
+        Instance = this; 
     }
 
     private void Start()
@@ -43,7 +43,7 @@ public class SimonSaysManager : MonoBehaviour
         }
     }
 
-    // --- NUEVO: Este método lo llamarás desde tus botones de dificultad ---
+   
     public void SetRounds(int rounds)
     {
         roundsToWin = rounds;
@@ -81,7 +81,6 @@ public class SimonSaysManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            // Usamos sequence.Count porque representa la ronda actual
             scoreText.text = "Ronda: " + sequence.Count.ToString();
         }
     }
@@ -107,33 +106,26 @@ private IEnumerator PlaySequence()
 
         if (index == sequence[playerStep])
         {
-            // Correcto: Flasheo rápido del botón que tocó el jugador
             StartCoroutine(GetVisualByIndex(index).Flash(0.25f));
             playerStep++;
 
-            // Si completó toda la secuencia actual de esta ronda
             if (playerStep >= sequence.Count)
             {
-                // Bloqueamos el input para que no toque nada mientras se genera la siguiente
                 inputEnabled = false;
                 NextRound();
             }
         }
         else
         {
-            // INCORRECTO: Perdió
             inputEnabled = false;
 
-            // Lanzamos el evento por si otros scripts (como sonidos de Wwise) están escuchando
             OnLoseGame?.Invoke(this, EventArgs.Empty);
 
-            // ACTIVAMOS EL PANEL DE DERROTA (GameOver)
             if (gameOverPanel != null)
             {
                 gameOverPanel.SetActive(true);
             }
 
-            // El panel de dificultad se queda apagado hasta que toque "Retry"
             if (difficultyPanel != null)
             {
                 difficultyPanel.SetActive(false);
@@ -153,18 +145,15 @@ private IEnumerator PlaySequence()
     }
     public void RetryGame()
     {
-        gameOverPanel.SetActive(false); // Cerramos el de derrota
-        difficultyPanel.SetActive(true); // Abrimos el de dificultad
-        sequence.Clear(); // Limpiamos la partida anterior
+        gameOverPanel.SetActive(false); 
+        difficultyPanel.SetActive(true); 
+        sequence.Clear(); 
     }
 
-    // Opción B: Reiniciar la escena completa (o volver a la principal)
     public void BackToGameScene()
     {
-        // Esto recarga la escena actual en la que estás
         SceneManager.LoadScene("Playground");
 
-        // Si tenés una escena específica de Pipo, podés usar:
-        // SceneManager.LoadScene("NombreDeTuEscena");
+        
     }
 }
