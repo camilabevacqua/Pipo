@@ -10,7 +10,6 @@ public class SimonSaysManager : MonoBehaviour
     public static SimonSaysManager Instance { get; private set; } // Para que otros scripts lo encuentren
     [SerializeField] private GameObject gameOverPanel;
 
-    public event EventHandler OnWinGame;
     public event EventHandler OnLoseGame;
 
     [Header("Configuración del Juego")]

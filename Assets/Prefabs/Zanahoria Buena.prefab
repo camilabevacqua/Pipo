@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8657436656433160303}
   - component: {fileID: 7209125823564024344}
   - component: {fileID: 6534040395103990282}
+  - component: {fileID: 6836228955750628231}
   m_Layer: 0
   m_Name: Zanahoria Buena
   m_TagString: Untagged
@@ -105,7 +106,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -166,3 +167,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   esBueno: 1
+  puntosQueDa: 10
+--- !u!114 &6836228955750628231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4707300570571111575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8298f49add123242968ce2b262881af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
