@@ -68,9 +68,20 @@ public class Cell : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
     void ToggleFlag()
     {
+        if (isRevealed) return;
+
         isFlagged = !isFlagged;
-        label.text = isFlagged ? "🚩" : "";
-        label.color = Color.black;
+
+        if (isFlagged)
+        {
+            label.text = "bandera";
+            manager.ChangeMineCount(-1);
+        }
+        else
+        {
+            label.text = "";
+            manager.ChangeMineCount(1);
+        }
     }
 
     void VibratePhone()

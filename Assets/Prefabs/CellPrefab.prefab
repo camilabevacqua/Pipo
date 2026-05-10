@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 1395398880741807073}
   - component: {fileID: 3287456310670359998}
   - component: {fileID: 2767770425076865659}
+  - component: {fileID: -5474690521500938452}
   m_Layer: 5
   m_Name: CellPrefab
   m_TagString: Untagged
@@ -206,7 +207,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -279,3 +280,23 @@ MonoBehaviour:
   adjacentMines: 0
   label: {fileID: 7011428925077235899}
   iconImage: {fileID: 1395398880741807073}
+--- !u!114 &-5474690521500938452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025257417543257178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: 0
+  m_MinHeight: 70
+  m_PreferredWidth: 70
+  m_PreferredHeight: 70
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
