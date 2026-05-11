@@ -20,5 +20,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Playground.unity
     guid: 15e5181c020fb0540a75ea945b0050d7
+  - enabled: 1
+    path: Assets/Scenes/SimonSays.unity
+    guid: dfb5590643575b74d90cda282774ddb1
+  - enabled: 1
+    path: Assets/Scenes/PipoCatch.unity
+    guid: 742ab0ee0703d4941b9ccc7c3f30c565
+  - enabled: 1
+    path: Assets/Scenes/PipoBurger.unity
+    guid: 22b3cf71a6bb15842a0c8064d9cb7620
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

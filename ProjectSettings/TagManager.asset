@@ -8,6 +8,9 @@ TagManager:
   - Bathtub
   - Wall
   - PauseMenu
+  - Suelo
+  - Plato
+  - Ingrediente
   layers:
   - Default
   - TransparentFX

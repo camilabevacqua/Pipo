@@ -2026,10 +2026,6 @@ MonoBehaviour:
   minesCountText: {fileID: 2116046098}
   cellPrefab: {fileID: 4025257417543257178, guid: 6e5e56444437156448b6fb4e8c616bd6, type: 3}
   gridParent: {fileID: 1470206915}
-  timer: 0
-  currentMinesLeft: 0
-  gameStarted: 0
-  gameOver: 0
   difficultyPanel: {fileID: 1015841699}
   gameOverPanel: {fileID: 1235555876}
 --- !u!4 &1071195087
