@@ -10,7 +10,8 @@ public class UIManager : MonoBehaviour
     public Image barraEnergia;
     public Image barraFelicidad;
     public Image barraLimpieza;
-   
+
+    public Text coinsText;
 
     public Image happy;
     public Image normal;
@@ -61,5 +62,18 @@ public class UIManager : MonoBehaviour
             sick = emotionsParent.transform.Find("Sick")?.GetComponent<Image>();
          
         }
+    }
+    public void UpdateCoinsDisplay()
+    {
+        if (coinsText == null)
+            coinsText = GameObject.Find("CoinsText")?.GetComponent<Text>();
+
+        if (coinsText != null)
+            coinsText.text = GameEconomy.GetCoins().ToString();
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        UpdateCoinsDisplay(); 
     }
 }
