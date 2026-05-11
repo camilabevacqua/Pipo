@@ -55,7 +55,7 @@ public class MinesweeperManager : MonoBehaviour
 
         switch (level)
         {
-            case 0: // Easy (9x9)
+            case 0:
                 width = 9; height = 9; mineCount = 10;
                 grid.cellSize = new Vector2(65, 65);
                 grid.spacing = new Vector2(15, 15);
@@ -180,7 +180,7 @@ public class MinesweeperManager : MonoBehaviour
             PlaceMines(cell.x, cell.y);
             CalculateAdjacentMines();
             RevealRecursive(cell.x, cell.y);
-            CheckWin(); 
+            CheckWin();
             return;
         }
 
@@ -193,7 +193,7 @@ public class MinesweeperManager : MonoBehaviour
         else
         {
             RevealRecursive(cell.x, cell.y);
-            CheckWin(); 
+            CheckWin();
         }
     }
 
@@ -327,12 +327,16 @@ public class MinesweeperManager : MonoBehaviour
         gameOver = true;
         gameStarted = false;
 
-        Debug.Log("¡Ganaste! Pipo está a salvo.");
+        int reward = 5;
+        if (width == 12) reward = 10;
+        else if (width == 15) reward = 15;
+
+        GameEconomy.AddCoins(reward);
 
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
-            gameOverPanel.GetComponentInChildren<TextMeshProUGUI>().text = "YOU WIN!";
+            gameOverPanel.GetComponentInChildren<TextMeshProUGUI>().text = "YOU WIN!\n+" + reward + " Coins";
         }
     }
 }

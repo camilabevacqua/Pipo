@@ -35,4 +35,8 @@ public class TabletInteractor : MonoBehaviour
     {
         SceneManager.LoadScene("PipoCatch");
     }
+    public void LoadMinesweeper()
+    {
+        SceneManager.LoadScene("Minesweeper");
+    }
 }
