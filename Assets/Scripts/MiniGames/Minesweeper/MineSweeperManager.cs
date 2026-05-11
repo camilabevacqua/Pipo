@@ -179,8 +179,8 @@ public class MinesweeperManager : MonoBehaviour
             gameStarted = true;
             PlaceMines(cell.x, cell.y);
             CalculateAdjacentMines();
-
             RevealRecursive(cell.x, cell.y);
+            CheckWin(); 
             return;
         }
 
@@ -193,6 +193,7 @@ public class MinesweeperManager : MonoBehaviour
         else
         {
             RevealRecursive(cell.x, cell.y);
+            CheckWin(); 
         }
     }
 
@@ -301,6 +302,37 @@ public class MinesweeperManager : MonoBehaviour
             Time.timeScale = 1f;
 
             gameOver = false;
+        }
+    }
+    void CheckWin()
+    {
+        int hiddenCells = 0;
+
+        foreach (Cell c in allCells)
+        {
+            if (!c.isRevealed)
+            {
+                hiddenCells++;
+            }
+        }
+
+        if (hiddenCells == mineCount)
+        {
+            WinGame();
+        }
+    }
+
+    void WinGame()
+    {
+        gameOver = true;
+        gameStarted = false;
+
+        Debug.Log("¡Ganaste! Pipo está a salvo.");
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+            gameOverPanel.GetComponentInChildren<TextMeshProUGUI>().text = "YOU WIN!";
         }
     }
 }
