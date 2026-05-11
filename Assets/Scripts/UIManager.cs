@@ -6,14 +6,19 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    [Header("Contenedores")]
+    public GameObject uiStatsCasa;
+
+    [Header("Barras de Estado")]
     public Image barraHambre;
     public Image barraEnergia;
     public Image barraFelicidad;
     public Image barraLimpieza;
 
     [Header("Economía")]
-    public Text coinsText; // Texto Legacy
+    public Text coinsText;
 
+    [Header("Extras")]
     public Image happy;
     public Image normal;
     public Image sad;
@@ -48,37 +53,48 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        // --- BUSQUEDA DE BARRAS ---
-        barraHambre = GameObject.Find("hambre")?.GetComponent<Image>();
-        barraEnergia = GameObject.Find("energia")?.GetComponent<Image>();
-        barraFelicidad = GameObject.Find("felicidad")?.GetComponent<Image>();
-        barraLimpieza = GameObject.Find("limpieza")?.GetComponent<Image>();
-        barraExp = GameObject.Find("barraExp")?.GetComponent<Slider>();
-        nivelText = GameObject.Find("NivelText")?.GetComponent<Text>();
+        if (uiStatsCasa == null) uiStatsCasa = GameObject.Find("UI_Stats_Casa");
 
-        // --- BUSQUEDA DEL TEXTO DE MONEDAS (Crucial) ---
-        // Buscamos el objeto por nombre en la escena actual para re-asignar la referencia
+        bool esEscenaDeCasa = scene.name == "Bathroom" ||
+                              scene.name == "Bedroom" ||
+                              scene.name == "Patio" ||
+                              scene.name == "Playground";
+                              
+
+
+
+        if (uiStatsCasa != null)
+        {
+            uiStatsCasa.SetActive(esEscenaDeCasa);
+        }
+
+        if (esEscenaDeCasa)
+        {
+            barraHambre = GameObject.Find("hambre")?.GetComponent<Image>();
+            barraEnergia = GameObject.Find("energia")?.GetComponent<Image>();
+            barraFelicidad = GameObject.Find("felicidad")?.GetComponent<Image>();
+            barraLimpieza = GameObject.Find("limpieza")?.GetComponent<Image>();
+            barraExp = GameObject.Find("barraExp")?.GetComponent<Slider>();
+            nivelText = GameObject.Find("NivelText")?.GetComponent<Text>();
+
+            var emotionsParent = GameObject.Find("Emotions");
+            if (emotionsParent != null)
+            {
+                happy = emotionsParent.transform.Find("Happy")?.GetComponent<Image>();
+                normal = emotionsParent.transform.Find("Normal")?.GetComponent<Image>();
+                sad = emotionsParent.transform.Find("Sad")?.GetComponent<Image>();
+                sick = emotionsParent.transform.Find("Sick")?.GetComponent<Image>();
+            }
+        }
+
         GameObject objCoins = GameObject.Find("CoinsText");
-        if (objCoins != null)
-        {
-            coinsText = objCoins.GetComponent<Text>();
-        }
-
-        var emotionsParent = GameObject.Find("Emotions");
-        if (emotionsParent != null)
-        {
-            happy = emotionsParent.transform.Find("Happy")?.GetComponent<Image>();
-            normal = emotionsParent.transform.Find("Normal")?.GetComponent<Image>();
-            sad = emotionsParent.transform.Find("Sad")?.GetComponent<Image>();
-            sick = emotionsParent.transform.Find("Sick")?.GetComponent<Image>();
-        }
+        if (objCoins != null) coinsText = objCoins.GetComponent<Text>();
 
         UpdateCoinsDisplay();
     }
 
     public void UpdateCoinsDisplay()
     {
-        // Si por alguna razón coinsText es nulo (ej: se borró el objeto), intentamos buscarlo de nuevo
         if (coinsText == null)
         {
             GameObject objCoins = GameObject.Find("CoinsText");
@@ -88,7 +104,7 @@ public class UIManager : MonoBehaviour
         if (coinsText != null)
         {
             coinsText.text = GameEconomy.GetCoins().ToString();
-            Debug.Log("UI de Monedas actualizada: " + coinsText.text);
+            Debug.Log("Monedas en UI actualizadas: " + coinsText.text);
         }
     }
 }
