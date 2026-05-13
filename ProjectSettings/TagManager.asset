@@ -11,6 +11,7 @@ TagManager:
   - Suelo
   - Plato
   - Ingrediente
+  - Grieta
   layers:
   - Default
   - TransparentFX
