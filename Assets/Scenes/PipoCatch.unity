@@ -247,8 +247,8 @@ Transform:
   m_GameObject: {fileID: 18566470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.86, y: -0.0375, z: 0}
-  m_LocalScale: {x: 0.2447, y: 9.99801, z: 1}
+  m_LocalPosition: {x: -3.2965, y: -0.0375, z: 0}
+  m_LocalScale: {x: 1.1176428, y: 9.99801, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -996,8 +996,8 @@ Transform:
   m_GameObject: {fileID: 547427874}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.89, y: -0.0375, z: 0}
-  m_LocalScale: {x: 0.2447, y: 9.99801, z: 1}
+  m_LocalPosition: {x: 3.36, y: -0.0375, z: 0}
+  m_LocalScale: {x: 1.1847885, y: 9.99801, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1848,6 +1848,7 @@ GameObject:
   - component: {fileID: 1467496951}
   - component: {fileID: 1467496950}
   - component: {fileID: 1467496955}
+  - component: {fileID: 1467496956}
   m_Layer: 0
   m_Name: pipo neutral sprite sheet_0
   m_TagString: Player
@@ -1862,7 +1863,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467496949}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22ef86088be6be6409f10487004b40f3, type: 3}
   m_Name: 
@@ -1937,10 +1938,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!212 &1467496953
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2033,6 +2034,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1467496956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467496949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117a8882c3b68614abe54c4d484f077f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suavizado: 20
 --- !u!1 &1615812014
 GameObject:
   m_ObjectHideFlags: 0
