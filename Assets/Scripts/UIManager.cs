@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
 
     [Header("Contenedores")]
     public GameObject uiStatsCasa;
+    public GameObject panelAjustes; 
+    public GameObject panelPrincipalOpciones; 
 
     [Header("Barras de Estado")]
     public Image barraHambre;
@@ -55,42 +57,69 @@ public class UIManager : MonoBehaviour
 
         if (uiStatsCasa == null) uiStatsCasa = GameObject.Find("UI_Stats_Casa");
 
+       
         bool esEscenaDeCasa = scene.name == "Bathroom" ||
                               scene.name == "Bedroom" ||
                               scene.name == "Patio" ||
-                              scene.name == "Playground";
-                              
-
-
+                              scene.name == "Playground" ||
+                              scene.name == "Casa";
 
         if (uiStatsCasa != null)
         {
             uiStatsCasa.SetActive(esEscenaDeCasa);
         }
 
+        if (!esEscenaDeCasa)
+        {
+            CerrarTodo();
+        }
+
         if (esEscenaDeCasa)
         {
-            barraHambre = GameObject.Find("hambre")?.GetComponent<Image>();
-            barraEnergia = GameObject.Find("energia")?.GetComponent<Image>();
-            barraFelicidad = GameObject.Find("felicidad")?.GetComponent<Image>();
-            barraLimpieza = GameObject.Find("limpieza")?.GetComponent<Image>();
-            barraExp = GameObject.Find("barraExp")?.GetComponent<Slider>();
-            nivelText = GameObject.Find("NivelText")?.GetComponent<Text>();
-
-            var emotionsParent = GameObject.Find("Emotions");
-            if (emotionsParent != null)
-            {
-                happy = emotionsParent.transform.Find("Happy")?.GetComponent<Image>();
-                normal = emotionsParent.transform.Find("Normal")?.GetComponent<Image>();
-                sad = emotionsParent.transform.Find("Sad")?.GetComponent<Image>();
-                sick = emotionsParent.transform.Find("Sick")?.GetComponent<Image>();
-            }
+            RevincularComponentesCasa();
         }
 
         GameObject objCoins = GameObject.Find("CoinsText");
         if (objCoins != null) coinsText = objCoins.GetComponent<Text>();
 
         UpdateCoinsDisplay();
+    }
+
+
+    public void AbrirMenuOpciones() 
+    {
+        if (panelPrincipalOpciones != null) panelPrincipalOpciones.SetActive(true);
+    }
+
+    public void AbrirAjustesAudio() 
+    {
+        if (panelAjustes != null) panelAjustes.SetActive(true);
+    }
+
+    public void CerrarTodo()
+    {
+        if (panelPrincipalOpciones != null) panelPrincipalOpciones.SetActive(false);
+        if (panelAjustes != null) panelAjustes.SetActive(false);
+    }
+
+
+    void RevincularComponentesCasa()
+    {
+        barraHambre = GameObject.Find("hambre")?.GetComponent<Image>();
+        barraEnergia = GameObject.Find("energia")?.GetComponent<Image>();
+        barraFelicidad = GameObject.Find("felicidad")?.GetComponent<Image>();
+        barraLimpieza = GameObject.Find("limpieza")?.GetComponent<Image>();
+        barraExp = GameObject.Find("barraExp")?.GetComponent<Slider>();
+        nivelText = GameObject.Find("NivelText")?.GetComponent<Text>();
+
+        var emotionsParent = GameObject.Find("Emotions");
+        if (emotionsParent != null)
+        {
+            happy = emotionsParent.transform.Find("Happy")?.GetComponent<Image>();
+            normal = emotionsParent.transform.Find("Normal")?.GetComponent<Image>();
+            sad = emotionsParent.transform.Find("Sad")?.GetComponent<Image>();
+            sick = emotionsParent.transform.Find("Sick")?.GetComponent<Image>();
+        }
     }
 
     public void UpdateCoinsDisplay()
@@ -104,7 +133,6 @@ public class UIManager : MonoBehaviour
         if (coinsText != null)
         {
             coinsText.text = GameEconomy.GetCoins().ToString();
-            Debug.Log("Monedas en UI actualizadas: " + coinsText.text);
         }
     }
 }
