@@ -5,22 +5,32 @@ public class PipoTiltController : MonoBehaviour
     [Header("Ajustes de Movimiento")]
     public float sensibilidad = 15f;
     public float suavizado = 10f;
-    public float limitePantallaX = 2.8f;
 
+    private Rigidbody2D rb;
     private float posicionXObjetivo;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        posicionXObjetivo = transform.position.x;
+    }
 
     void Update()
     {
         if (Time.timeScale == 0f) return;
 
         float inclinacion = Input.acceleration.x;
-
         posicionXObjetivo += inclinacion * sensibilidad * Time.deltaTime;
+    }
 
-        posicionXObjetivo = Mathf.Clamp(posicionXObjetivo, -limitePantallaX, limitePantallaX);
+    void FixedUpdate()
+    {
+        Vector2 posicionActual = rb.position;
+        Vector2 objetivo = new Vector2(posicionXObjetivo, rb.position.y);
 
-        Vector3 nuevaPos = new Vector3(posicionXObjetivo, transform.position.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, nuevaPos, Time.deltaTime * suavizado);
+        Vector2 nuevaPos = Vector2.Lerp(posicionActual, objetivo, Time.fixedDeltaTime * suavizado);
+
+        rb.MovePosition(nuevaPos);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
