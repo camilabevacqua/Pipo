@@ -85,9 +85,4 @@ public class GameManagerCatch : MonoBehaviour
 
         panelGameOver.SetActive(true);
     }
-
-    public void BotonMenu()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 }

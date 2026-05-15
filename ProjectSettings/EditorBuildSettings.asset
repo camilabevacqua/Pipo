@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: c581eb46815804a468b2d56495c474a4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Patio.unity
     guid: ae3908ca4a32815439bab397827f601a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Bathroom.unity
     guid: c846f8346399c6d42b3057c3ca7f3641
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Bedroom.unity
     guid: 8fdafcf683320964d99689be92b89109
   - enabled: 1
@@ -26,12 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PipoCatch.unity
     guid: 742ab0ee0703d4941b9ccc7c3f30c565
-  - enabled: 1
-    path: Assets/Scenes/PipoOnIce.unity
-    guid: acf36a5438838b0409320873fc7dbb70
-  - enabled: 1
-    path: Assets/Scenes/MemoryGame.unity
-    guid: 1cd27ac40237aa84fb7ebf139397bb0e
   - enabled: 1
     path: Assets/Scenes/Minesweeper.unity
     guid: e4858c11df382b84c8e669f83b08e8b9

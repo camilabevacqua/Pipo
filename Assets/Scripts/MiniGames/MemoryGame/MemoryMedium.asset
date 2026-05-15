@@ -16,5 +16,5 @@ MonoBehaviour:
   cantidadPares: 12
   tiempoMuestra: 3
   tiempoLimite: 90
-  recompensa: 5
+  recompensa: 0
   columnasGrid: 4
