@@ -124,6 +124,11 @@ public class IceGameManager : MonoBehaviour
         panelMenuInicio.SetActive(true);
     }
 
+    public void ExitMiniGame()
+    {
+        SceneManager.LoadScene("Playground");
+    }
+
     public void ReiniciarJuego()
     {
         juegoIniciado = true;
