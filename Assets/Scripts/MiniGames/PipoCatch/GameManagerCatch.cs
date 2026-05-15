@@ -2,8 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
+
 public class GameManagerCatch : MonoBehaviour
 {
+
+    [Header("Economía")]
+    [SerializeField] private int puntosPorRecompensa = 100;
+    [SerializeField] private int monedasPorRecompensa = 5;
+
+    [SerializeField] private GameObject coinRewardText;
+
+    private int siguienteRecompensa = 100;
     public static GameManagerCatch instance;
     public TextMeshProUGUI textoPuntajeFinal;
 
@@ -42,7 +52,22 @@ public class GameManagerCatch : MonoBehaviour
     public void SumarPuntos(int cantidad)
     {
         puntos += cantidad;
+
         ActualizarTextoPuntos();
+
+        if (puntos >= siguienteRecompensa)
+        {
+            GameEconomy.AddCoins(monedasPorRecompensa);
+
+            Debug.Log("Ganaste " + monedasPorRecompensa + " monedas!");
+
+            if (coinRewardText != null)
+            {
+                StartCoroutine(MostrarTextoMonedas());
+            }
+
+            siguienteRecompensa += puntosPorRecompensa;
+        }
     }
 
     void ActualizarTextoPuntos()
@@ -84,5 +109,13 @@ public class GameManagerCatch : MonoBehaviour
         }
 
         panelGameOver.SetActive(true);
+    }
+    IEnumerator MostrarTextoMonedas()
+    {
+        coinRewardText.SetActive(true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        coinRewardText.SetActive(false);
     }
 }
