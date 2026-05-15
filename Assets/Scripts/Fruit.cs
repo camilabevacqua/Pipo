@@ -11,19 +11,18 @@ public abstract class Fruit : MonoBehaviour, ICollectible
     private float tiempoVida = 10f;
     public AudioClip spawnSound;
     public AudioClip eatSound;
-
     void Start()
     {
-        if (spawnSound != null && SFXManager.instance != null)
+        if (spawnSound != null)
         {
-            SFXManager.instance.PlaySFX(spawnSound);
+            AudioSource.PlayClipAtPoint(spawnSound, transform.position);
         }
     }
     public virtual void Collect()
     {
-        if (eatSound != null && SFXManager.instance != null)
+        if (eatSound != null)
         {
-            SFXManager.instance.PlaySFX(eatSound);
+            AudioSource.PlayClipAtPoint(eatSound, transform.position);
         }
         OnFruitCollected?.Invoke(cantidadHambre);
         Destroy(gameObject);

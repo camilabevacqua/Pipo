@@ -2492,7 +2492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331991dae104d914d89ad276f3685e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 510919111}
   levelUpSound: {fileID: 8300000, guid: ce4b6a52801410c458df4ea9ccfc2416, type: 3}
 --- !u!82 &510919111
 AudioSource:
@@ -7345,26 +7344,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 194451663}
     m_Modifications:
-    - target: {fileID: 157846818413133051, guid: a91d4ff17a3e26b409dd6cd02282475d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.7177541
-      objectReference: {fileID: 0}
-    - target: {fileID: 157846818413133051, guid: a91d4ff17a3e26b409dd6cd02282475d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.7177541
-      objectReference: {fileID: 0}
-    - target: {fileID: 157846818413133051, guid: a91d4ff17a3e26b409dd6cd02282475d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.4785028
-      objectReference: {fileID: 0}
-    - target: {fileID: 157846818413133051, guid: a91d4ff17a3e26b409dd6cd02282475d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 362
-      objectReference: {fileID: 0}
-    - target: {fileID: 157846818413133051, guid: a91d4ff17a3e26b409dd6cd02282475d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 442
-      objectReference: {fileID: 0}
     - target: {fileID: 1790105336230101955, guid: a91d4ff17a3e26b409dd6cd02282475d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -7372,10 +7351,6 @@ PrefabInstance:
     - target: {fileID: 1790105336230101955, guid: a91d4ff17a3e26b409dd6cd02282475d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2055873274079101885, guid: a91d4ff17a3e26b409dd6cd02282475d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2224031868993030398, guid: a91d4ff17a3e26b409dd6cd02282475d, type: 3}
       propertyPath: m_MaxValue

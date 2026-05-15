@@ -3,9 +3,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-
-    public AudioSource audioSource;
-
+    private AudioSource audioSource;
     public AudioClip levelUpSound;
 
     void Awake()
@@ -17,26 +15,13 @@ public class AudioManager : MonoBehaviour
         }
 
         instance = this;
-
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
-
+        audioSource = GetComponent<AudioSource>();
         DontDestroyOnLoad(gameObject);
-    }
-
-    public void SetSFXVolume(float valor)
-    {
-        if (audioSource != null)
-        {
-            audioSource.volume = valor;
-        }
     }
 
     public void PlaySound(AudioClip clip)
     {
         if (clip != null)
-        {
             audioSource.PlayOneShot(clip);
-        }
     }
 }
