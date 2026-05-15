@@ -1,15 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    [Header("Audio")]
+    public AudioMixer mainMixer;
+
     [Header("Contenedores")]
     public GameObject uiStatsCasa;
-    public GameObject panelAjustes; 
-    public GameObject panelPrincipalOpciones; 
+    public GameObject panelAjustes;
+    public GameObject panelPrincipalOpciones;
 
     [Header("Barras de Estado")]
     public Image barraHambre;
@@ -28,18 +32,38 @@ public class UIManager : MonoBehaviour
     public Slider barraExp;
     public Text nivelText;
 
+    [Header("Sliders Audio")]
+    public Slider sliderBGM;
+    public Slider sliderSFX;
+
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        float bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 1f);
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+
+        SetVolumeBGM(bgmVolume);
+        SetVolumeSFX(sfxVolume);
+
+        if (sliderBGM != null)
+            sliderBGM.value = bgmVolume;
+
+        if (sliderSFX != null)
+            sliderSFX.value = sfxVolume;
     }
 
     void OnDestroy()
@@ -55,14 +79,15 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (uiStatsCasa == null) uiStatsCasa = GameObject.Find("UI_Stats_Casa");
+        if (uiStatsCasa == null)
+            uiStatsCasa = GameObject.Find("UI_Stats_Casa");
 
-       
-        bool esEscenaDeCasa = scene.name == "Bathroom" ||
-                              scene.name == "Bedroom" ||
-                              scene.name == "Patio" ||
-                              scene.name == "Playground" ||
-                              scene.name == "Casa";
+        bool esEscenaDeCasa =
+            scene.name == "Bathroom" ||
+            scene.name == "Bedroom" ||
+            scene.name == "Patio" ||
+            scene.name == "Playground" ||
+            scene.name == "Casa";
 
         if (uiStatsCasa != null)
         {
@@ -80,28 +105,66 @@ public class UIManager : MonoBehaviour
         }
 
         GameObject objCoins = GameObject.Find("CoinsText");
-        if (objCoins != null) coinsText = objCoins.GetComponent<Text>();
+
+        if (objCoins != null)
+            coinsText = objCoins.GetComponent<Text>();
 
         UpdateCoinsDisplay();
     }
 
-
-    public void AbrirMenuOpciones() 
+    
+    public void SetVolumeSFX(float value)
     {
-        if (panelPrincipalOpciones != null) panelPrincipalOpciones.SetActive(true);
+        float dbValue = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+
+        mainMixer.SetFloat("VolumenSFX", dbValue);
+
+        PlayerPrefs.SetFloat("SFXVolume", value);
+        PlayerPrefs.Save();
     }
 
-    public void AbrirAjustesAudio() 
+    public void SetVolumeBGM(float value)
     {
-        if (panelAjustes != null) panelAjustes.SetActive(true);
+        float dbValue = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+
+        mainMixer.SetFloat("VolumenBGM", dbValue);
+
+        PlayerPrefs.SetFloat("BGMVolume", value);
+        PlayerPrefs.Save();
+    }
+
+    
+    public void AbrirMenuOpciones()
+    {
+        if (panelPrincipalOpciones != null)
+            panelPrincipalOpciones.SetActive(true);
+    }
+
+    public void AbrirAjustesAudio()
+    {
+        if (panelAjustes != null)
+            panelAjustes.SetActive(true);
+    }
+
+    public void VolverDeAjustes()
+    {
+        if (panelAjustes != null)
+            panelAjustes.SetActive(false);
+
+        if (panelPrincipalOpciones != null)
+            panelPrincipalOpciones.SetActive(true);
     }
 
     public void CerrarTodo()
     {
-        if (panelPrincipalOpciones != null) panelPrincipalOpciones.SetActive(false);
-        if (panelAjustes != null) panelAjustes.SetActive(false);
+        if (panelPrincipalOpciones != null)
+            panelPrincipalOpciones.SetActive(false);
+
+        if (panelAjustes != null)
+            panelAjustes.SetActive(false);
     }
 
+   
 
     void RevincularComponentesCasa()
     {
@@ -109,10 +172,12 @@ public class UIManager : MonoBehaviour
         barraEnergia = GameObject.Find("energia")?.GetComponent<Image>();
         barraFelicidad = GameObject.Find("felicidad")?.GetComponent<Image>();
         barraLimpieza = GameObject.Find("limpieza")?.GetComponent<Image>();
+
         barraExp = GameObject.Find("barraExp")?.GetComponent<Slider>();
         nivelText = GameObject.Find("NivelText")?.GetComponent<Text>();
 
         var emotionsParent = GameObject.Find("Emotions");
+
         if (emotionsParent != null)
         {
             happy = emotionsParent.transform.Find("Happy")?.GetComponent<Image>();
@@ -127,7 +192,9 @@ public class UIManager : MonoBehaviour
         if (coinsText == null)
         {
             GameObject objCoins = GameObject.Find("CoinsText");
-            if (objCoins != null) coinsText = objCoins.GetComponent<Text>();
+
+            if (objCoins != null)
+                coinsText = objCoins.GetComponent<Text>();
         }
 
         if (coinsText != null)

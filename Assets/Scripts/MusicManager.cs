@@ -12,7 +12,6 @@ public class BGMManager : MonoBehaviour
 
     void Awake()
     {
-
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -47,5 +46,10 @@ public class BGMManager : MonoBehaviour
             if (!audioSource.isPlaying)
                 audioSource.Play();
         }
+    }
+
+    public void SetBGMVolume(float volume)
+    {
+        if (audioSource != null) audioSource.volume = volume;
     }
 }

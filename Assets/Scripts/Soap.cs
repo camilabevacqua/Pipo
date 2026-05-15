@@ -33,7 +33,7 @@ public class JabonDragEspuma : MonoBehaviour
             Vector2 posMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = posMouse;
         }
-
+       
         bool debeSonar = tocandoPersonaje && arrastrando && StatsPlayer.instance != null && StatsPlayer.instance.EstaEnBañera;
 
         if (debeSonar)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class BallJoint : MonoBehaviour
 
@@ -73,8 +74,8 @@ public class BallJoint : MonoBehaviour
     {
         if (collision.collider.CompareTag("Wall"))
         {
-            if (sonidoRebote != null && audioSource != null)
-                audioSource.PlayOneShot(sonidoRebote);
+            if (sonidoRebote != null && SFXManager.instance != null)
+                SFXManager.instance.PlaySFX(sonidoRebote);
         }
     }
 }

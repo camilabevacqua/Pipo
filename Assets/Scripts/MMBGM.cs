@@ -45,4 +45,8 @@ public class MMBGM : MonoBehaviour
                 audioSource.Stop();
         }
     }
+    public void SetBGMVolume(float volume)
+    {
+        if (audioSource != null) audioSource.volume = volume;
+    }
 }
