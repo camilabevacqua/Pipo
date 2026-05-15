@@ -15,6 +15,6 @@ MonoBehaviour:
   dificultadNombre: Hard
   cantidadPares: 20
   tiempoMuestra: 2
-  tiempoLimite: 90
-  recompensa: 0
+  tiempoLimite: 120
+  recompensa: 20
   columnasGrid: 5
