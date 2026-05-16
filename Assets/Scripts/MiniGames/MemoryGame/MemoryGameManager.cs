@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MemoryGameManager : MonoBehaviour
 {
@@ -213,5 +214,10 @@ public class MemoryGameManager : MonoBehaviour
         panelMenu.SetActive(true);
 
         textTiempo.text = "Time: --";
+    }
+
+    public void ExitMiniGame()
+    {
+        SceneManager.LoadScene("Playground");
     }
 }
