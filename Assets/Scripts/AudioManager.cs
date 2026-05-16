@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class AudioManager : MonoBehaviour
     public AudioSource audioSource;
 
     public AudioClip levelUpSound;
+
+    [Header("Mixer")]
+    public AudioMixer mainMixer;
 
     void Awake()
     {
@@ -24,12 +28,20 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void SetSFXVolume(float valor)
+    public void SetBGMVolume(float value)
     {
-        if (audioSource != null)
-        {
-            audioSource.volume = valor;
-        }
+        float dbValue =
+            Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+
+        mainMixer.SetFloat("VolumenBGM", dbValue);
+    }
+
+    public void SetSFXVolume(float value)
+    {
+        float dbValue =
+            Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+
+        mainMixer.SetFloat("VolumenSFX", dbValue);
     }
 
     public void PlaySound(AudioClip clip)
