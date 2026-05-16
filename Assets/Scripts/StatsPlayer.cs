@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System; 
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
 public class StatsPlayer : MonoBehaviour
 {
     public static StatsPlayer instance;
+
+    [Header("Minijuegos")]
+    [SerializeField] private string[] escenasMiniJuegos;
 
     [Range(0, 100)] public float hambre = 100f;
     [Range(0, 100)] public float energia = 100f;
@@ -30,10 +33,10 @@ public class StatsPlayer : MonoBehaviour
     public static void InvokeOnBañeraExitedEvent() => OnBañeraExitedEvent?.Invoke();
 
     public AudioClip levelUpSound;
-    
+
     void Awake()
     {
-       
+
         if (instance == null)
         {
             instance = this;
@@ -66,9 +69,21 @@ public class StatsPlayer : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        bool esMiniJuego = false;
+
+        foreach (string nombreEscena in escenasMiniJuegos)
+        {
+            if (scene.name == nombreEscena)
+            {
+                esMiniJuego = true;
+                break;
+            }
+        }
+
+        SetPipoVisible(!esMiniJuego);
+
         StartCoroutine(WaitForUIReady());
     }
-
     System.Collections.IEnumerator WaitForUIReady()
     {
         float timeout = 1f;
@@ -191,5 +206,15 @@ public class StatsPlayer : MonoBehaviour
     private void HandleFruitCollected(float cantidadHambre)
     {
         Comer(cantidadHambre);
+    }
+
+    void SetPipoVisible(bool visible)
+    {
+        Transform visual = transform.Find("Pipo");
+
+        if (visual != null)
+        {
+            visual.gameObject.SetActive(visible);
+        }
     }
 }

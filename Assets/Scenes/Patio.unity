@@ -626,6 +626,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pet
       objectReference: {fileID: 0}
+    - target: {fileID: 7577831918701182952, guid: 3dfa7053a7c9d164681841533ac17334, type: 3}
+      propertyPath: escenasMiniJuegos.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577831918701182952, guid: 3dfa7053a7c9d164681841533ac17334, type: 3}
+      propertyPath: 'escenasMiniJuegos.Array.data[0]'
+      value: MemoryGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577831918701182952, guid: 3dfa7053a7c9d164681841533ac17334, type: 3}
+      propertyPath: 'escenasMiniJuegos.Array.data[1]'
+      value: Minesweeper
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577831918701182952, guid: 3dfa7053a7c9d164681841533ac17334, type: 3}
+      propertyPath: 'escenasMiniJuegos.Array.data[2]'
+      value: PipoCatch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577831918701182952, guid: 3dfa7053a7c9d164681841533ac17334, type: 3}
+      propertyPath: 'escenasMiniJuegos.Array.data[3]'
+      value: PipoOnIce
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577831918701182952, guid: 3dfa7053a7c9d164681841533ac17334, type: 3}
+      propertyPath: 'escenasMiniJuegos.Array.data[4]'
+      value: SimonSays
+      objectReference: {fileID: 0}
     - target: {fileID: 7917302000138829902, guid: 3dfa7053a7c9d164681841533ac17334, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
