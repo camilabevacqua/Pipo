@@ -17,12 +17,18 @@ public class CatchItem : MonoBehaviour
             {
                 GameManagerCatch.instance.PerderVida();
             }
-            Destroy(gameObject);
+
+            Desactivar();
         }
 
         if (collision.CompareTag("Suelo"))
         {
-            Destroy(gameObject);
+            Desactivar();
         }
+    }
+
+    public void Desactivar()
+    {
+        gameObject.SetActive(false);
     }
 }
