@@ -203,18 +203,18 @@ public class StatsPlayer : MonoBehaviour
         }
     }
 
+    void SetPipoVisible(bool visible)
+    {
+        Transform pipoVisual = transform.Find("Pipo");
+
+        if (pipoVisual != null)
+        {
+            pipoVisual.gameObject.SetActive(visible);
+        }
+    }
+
     private void HandleFruitCollected(float cantidadHambre)
     {
         Comer(cantidadHambre);
-    }
-
-    void SetPipoVisible(bool visible)
-    {
-        Transform visual = transform.Find("Pipo");
-
-        if (visual != null)
-        {
-            visual.gameObject.SetActive(visible);
-        }
     }
 }

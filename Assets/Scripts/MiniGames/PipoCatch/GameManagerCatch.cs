@@ -2,14 +2,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
+
 public class GameManagerCatch : MonoBehaviour
 {
+    [Header("Recompensas")]
+    [SerializeField] private TextMeshProUGUI textoMonedasGanadas;
+
+    private int monedasGanadas = 0;
+
     [Header("Economía")]
     [SerializeField] private int puntosPorRecompensa = 100;
     [SerializeField] private int monedasPorRecompensa = 5;
 
     private int siguienteRecompensa = 100;
+
     public static GameManagerCatch instance;
+
     public TextMeshProUGUI textoPuntajeFinal;
 
     [Header("Estadísticas")]
@@ -22,13 +31,23 @@ public class GameManagerCatch : MonoBehaviour
     public GameObject panelGameOver;
     public GameObject[] corazones;
 
-    void Awake() { instance = this; }
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
         Time.timeScale = 0;
+
         panelInicio.SetActive(true);
         panelGameOver.SetActive(false);
+
+        if (textoMonedasGanadas != null)
+        {
+            textoMonedasGanadas.gameObject.SetActive(false);
+        }
+
         ActualizarTextoPuntos();
     }
 
@@ -52,12 +71,34 @@ public class GameManagerCatch : MonoBehaviour
 
         if (puntos >= siguienteRecompensa)
         {
+            monedasGanadas += monedasPorRecompensa;
+
             GameEconomy.AddCoins(monedasPorRecompensa);
 
             Debug.Log("Ganaste " + monedasPorRecompensa + " monedas!");
 
+            StartCoroutine(
+                MostrarTextoMonedas(
+                    "+" + monedasPorRecompensa + " monedas!"
+                )
+            );
+
             siguienteRecompensa += puntosPorRecompensa;
         }
+    }
+
+    IEnumerator MostrarTextoMonedas(string mensaje)
+    {
+        if (textoMonedasGanadas == null)
+            yield break;
+
+        textoMonedasGanadas.text = mensaje;
+
+        textoMonedasGanadas.gameObject.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        textoMonedasGanadas.gameObject.SetActive(false);
     }
 
     void ActualizarTextoPuntos()
@@ -70,6 +111,7 @@ public class GameManagerCatch : MonoBehaviour
         if (vidas > 0)
         {
             vidas--;
+
             corazones[vidas].SetActive(false);
 
             if (vidas <= 0)
@@ -78,14 +120,20 @@ public class GameManagerCatch : MonoBehaviour
             }
         }
     }
+
     public void BotonRetry()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().name
+        );
     }
+
     public void BotonExit()
     {
         Time.timeScale = 1;
+
         SceneManager.LoadScene("Playground");
     }
 
@@ -95,7 +143,9 @@ public class GameManagerCatch : MonoBehaviour
 
         if (textoPuntajeFinal != null)
         {
-            textoPuntajeFinal.text = "Puntaje Final: " + puntos.ToString();
+            textoPuntajeFinal.text =
+                "Puntaje Final: " + puntos +
+                "\nMonedas Ganadas: " + monedasGanadas;
         }
 
         panelGameOver.SetActive(true);
@@ -103,6 +153,8 @@ public class GameManagerCatch : MonoBehaviour
 
     public void BotonMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().name
+        );
     }
 }

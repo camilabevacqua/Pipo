@@ -41,6 +41,7 @@ public class UIManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+
             DontDestroyOnLoad(gameObject);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -53,8 +54,11 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        float bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 1f);
-        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        float bgmVolume =
+            PlayerPrefs.GetFloat("BGMVolume", 1f);
+
+        float sfxVolume =
+            PlayerPrefs.GetFloat("SFXVolume", 1f);
 
         SetVolumeBGM(bgmVolume);
         SetVolumeSFX(sfxVolume);
@@ -73,14 +77,11 @@ public class UIManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu")
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         if (uiStatsCasa == null)
-            uiStatsCasa = GameObject.Find("UI_Stats_Casa");
+        {
+            uiStatsCasa =
+                GameObject.Find("UI_Stats_Casa");
+        }
 
         bool esEscenaDeCasa =
             scene.name == "Bathroom" ||
@@ -104,86 +105,158 @@ public class UIManager : MonoBehaviour
             RevincularComponentesCasa();
         }
 
-        GameObject objCoins = GameObject.Find("CoinsText");
+        GameObject objCoins =
+            GameObject.Find("CoinsText");
 
         if (objCoins != null)
-            coinsText = objCoins.GetComponent<Text>();
+        {
+            coinsText =
+                objCoins.GetComponent<Text>();
+        }
 
         UpdateCoinsDisplay();
+
+        Canvas canvas =
+            GetComponentInChildren<Canvas>(true);
+
+        if (canvas != null)
+        {
+            canvas.worldCamera = Camera.main;
+        }
     }
 
-    
     public void SetVolumeSFX(float value)
     {
-        float dbValue = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+        float dbValue =
+            Mathf.Log10(
+                Mathf.Clamp(value, 0.0001f, 1f)
+            ) * 20;
 
-        mainMixer.SetFloat("VolumenSFX", dbValue);
+        mainMixer.SetFloat(
+            "VolumenSFX",
+            dbValue
+        );
 
-        PlayerPrefs.SetFloat("SFXVolume", value);
+        PlayerPrefs.SetFloat(
+            "SFXVolume",
+            value
+        );
+
         PlayerPrefs.Save();
     }
 
     public void SetVolumeBGM(float value)
     {
-        float dbValue = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20;
+        float dbValue =
+            Mathf.Log10(
+                Mathf.Clamp(value, 0.0001f, 1f)
+            ) * 20;
 
-        mainMixer.SetFloat("VolumenBGM", dbValue);
+        mainMixer.SetFloat(
+            "VolumenBGM",
+            dbValue
+        );
 
-        PlayerPrefs.SetFloat("BGMVolume", value);
+        PlayerPrefs.SetFloat(
+            "BGMVolume",
+            value
+        );
+
         PlayerPrefs.Save();
     }
 
-    
     public void AbrirMenuOpciones()
     {
         if (panelPrincipalOpciones != null)
+        {
             panelPrincipalOpciones.SetActive(true);
+        }
     }
 
     public void AbrirAjustesAudio()
     {
         if (panelAjustes != null)
+        {
             panelAjustes.SetActive(true);
+        }
     }
 
     public void VolverDeAjustes()
     {
         if (panelAjustes != null)
+        {
             panelAjustes.SetActive(false);
+        }
 
         if (panelPrincipalOpciones != null)
+        {
             panelPrincipalOpciones.SetActive(true);
+        }
     }
 
     public void CerrarTodo()
     {
         if (panelPrincipalOpciones != null)
+        {
             panelPrincipalOpciones.SetActive(false);
+        }
 
         if (panelAjustes != null)
+        {
             panelAjustes.SetActive(false);
+        }
     }
-
-   
 
     void RevincularComponentesCasa()
     {
-        barraHambre = GameObject.Find("hambre")?.GetComponent<Image>();
-        barraEnergia = GameObject.Find("energia")?.GetComponent<Image>();
-        barraFelicidad = GameObject.Find("felicidad")?.GetComponent<Image>();
-        barraLimpieza = GameObject.Find("limpieza")?.GetComponent<Image>();
+        barraHambre =
+            GameObject.Find("hambre")
+            ?.GetComponent<Image>();
 
-        barraExp = GameObject.Find("barraExp")?.GetComponent<Slider>();
-        nivelText = GameObject.Find("NivelText")?.GetComponent<Text>();
+        barraEnergia =
+            GameObject.Find("energia")
+            ?.GetComponent<Image>();
 
-        var emotionsParent = GameObject.Find("Emotions");
+        barraFelicidad =
+            GameObject.Find("felicidad")
+            ?.GetComponent<Image>();
+
+        barraLimpieza =
+            GameObject.Find("limpieza")
+            ?.GetComponent<Image>();
+
+        barraExp =
+            GameObject.Find("barraExp")
+            ?.GetComponent<Slider>();
+
+        nivelText =
+            GameObject.Find("NivelText")
+            ?.GetComponent<Text>();
+
+        var emotionsParent =
+            GameObject.Find("Emotions");
 
         if (emotionsParent != null)
         {
-            happy = emotionsParent.transform.Find("Happy")?.GetComponent<Image>();
-            normal = emotionsParent.transform.Find("Normal")?.GetComponent<Image>();
-            sad = emotionsParent.transform.Find("Sad")?.GetComponent<Image>();
-            sick = emotionsParent.transform.Find("Sick")?.GetComponent<Image>();
+            happy =
+                emotionsParent.transform
+                .Find("Happy")
+                ?.GetComponent<Image>();
+
+            normal =
+                emotionsParent.transform
+                .Find("Normal")
+                ?.GetComponent<Image>();
+
+            sad =
+                emotionsParent.transform
+                .Find("Sad")
+                ?.GetComponent<Image>();
+
+            sick =
+                emotionsParent.transform
+                .Find("Sick")
+                ?.GetComponent<Image>();
         }
     }
 
@@ -191,15 +264,20 @@ public class UIManager : MonoBehaviour
     {
         if (coinsText == null)
         {
-            GameObject objCoins = GameObject.Find("CoinsText");
+            GameObject objCoins =
+                GameObject.Find("CoinsText");
 
             if (objCoins != null)
-                coinsText = objCoins.GetComponent<Text>();
+            {
+                coinsText =
+                    objCoins.GetComponent<Text>();
+            }
         }
 
         if (coinsText != null)
         {
-            coinsText.text = GameEconomy.GetCoins().ToString();
+            coinsText.text =
+                GameEconomy.GetCoins().ToString();
         }
     }
 }
