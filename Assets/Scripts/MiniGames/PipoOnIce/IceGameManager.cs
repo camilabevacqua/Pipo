@@ -126,6 +126,7 @@ public class IceGameManager : MonoBehaviour
 
     public void ExitMiniGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Playground");
     }
 
@@ -182,7 +183,11 @@ public class IceGameManager : MonoBehaviour
     public void SumarMoneda()
     {
         monedasTotales++;
-        if (textMonedas != null) textMonedas.text = "Coins " + monedasTotales.ToString();
+
+        GameEconomy.AddCoins(1);
+
+        if (textMonedas != null)
+            textMonedas.text = "Coins: " + monedasTotales.ToString();
     }
 
     GameObject GetGrietaDePool()

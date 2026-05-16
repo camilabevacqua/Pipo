@@ -155,12 +155,17 @@ public class MemoryGameManager : MonoBehaviour
     void Ganar()
     {
         juegoIniciado = false;
-        StopAllCoroutines(); 
+
+        StopAllCoroutines();
+
+        GameEconomy.AddCoins(nivelActual.recompensa);
 
         panelVictoria.SetActive(true);
+
         if (textMonedasVictoria != null)
         {
-            textMonedasVictoria.text = "+" + nivelActual.recompensa.ToString();
+            textMonedasVictoria.text =
+                "+" + nivelActual.recompensa.ToString() + " Coins";
         }
     }
 
