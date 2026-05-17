@@ -213,17 +213,26 @@ public class IceGameManager : MonoBehaviour
         juegoIniciado = false;
         Time.timeScale = 0f;
 
+        float expGanada = 5f + (score * 0.08f);
+
+        if (score >= 20)
+            expGanada += 3f;
+
+        if (score >= 50)
+            expGanada += 5f;
+
+        expGanada = Mathf.Clamp(expGanada, 3f, 18f);
+
+        StatsPlayer.instance?.AddExp(expGanada);
+
         if (panelGameOver != null)
-        {
             panelGameOver.SetActive(true);
-        }
 
         if (textFinalScore != null)
             textFinalScore.text = "Final score: " + score.ToString();
 
         if (textFinalMonedas != null)
             textFinalMonedas.text = "Coins: " + monedasTotales.ToString();
-
     }
 
 }

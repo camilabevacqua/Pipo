@@ -389,20 +389,18 @@ public class MinesweeperManager : MonoBehaviour
 
         DarRecompensa();
 
-        if (victoryPanel != null)
-        {
-            victoryPanel.SetActive(true);
-        }
+        int expGanada =
+            5 + (dificultadActual * 4);
 
-        if (textoVictoria != null)
-        {
-            textoVictoria.text =
-                "YOU WIN!" +
-                "\nTiempo: " +
-                Mathf.FloorToInt(timer) + "s" +
-                "\nMonedas Ganadas: " +
-                monedasGanadas;
-        }
+        if (timer <= 60f)
+            expGanada += 8;
+        else if (timer <= 120f)
+            expGanada += 4;
+
+        StatsPlayer.instance?.AddExp(expGanada);
+
+        if (victoryPanel != null)
+            victoryPanel.SetActive(true);
     }
 
     void DarRecompensa()

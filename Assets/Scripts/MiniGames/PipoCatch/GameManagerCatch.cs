@@ -141,6 +141,14 @@ public class GameManagerCatch : MonoBehaviour
     {
         Time.timeScale = 0;
 
+        float expGanada = puntos / 120f;
+
+        expGanada += 2f;
+
+        expGanada = Mathf.Clamp(expGanada, 2f, 12f);
+
+        StatsPlayer.instance?.AddExp(expGanada);
+
         if (textoPuntajeFinal != null)
         {
             textoPuntajeFinal.text =

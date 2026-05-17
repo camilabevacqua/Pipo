@@ -16,7 +16,6 @@ public class SimonSaysManager : MonoBehaviour
 
     [SerializeField] private GameObject gameOverPanel;
 
-    public event EventHandler OnLoseGame;
 
     [Header("Configuración del Juego")]
     [SerializeField] private SimonButton[] buttonVisuals;
@@ -195,6 +194,18 @@ public class SimonSaysManager : MonoBehaviour
 
         GameEconomy.AddCoins(monedasGanadas);
 
+        float expGanada = rondaCompletada * 1.2f;
+
+        if (rondaCompletada >= 10)
+            expGanada += 5f;
+
+        if (rondaCompletada >= 20)
+            expGanada += 10f;
+
+        expGanada = Mathf.Clamp(expGanada, 2f, 25f);
+
+        StatsPlayer.instance?.AddExp(expGanada);
+
         if (coinsRewardText != null)
         {
             coinsRewardText.text =
@@ -202,15 +213,8 @@ public class SimonSaysManager : MonoBehaviour
                 "\nGanaste " + monedasGanadas + " monedas";
         }
 
-        Debug.Log("Perdió en ronda: " + sequence.Count);
-        Debug.Log("Monedas: " + monedasGanadas);
-
-        OnLoseGame?.Invoke(this, EventArgs.Empty);
-
         if (gameOverPanel != null)
-        {
             gameOverPanel.SetActive(true);
-        }
     }
 
     // =========================

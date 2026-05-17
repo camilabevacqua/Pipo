@@ -6,7 +6,7 @@ public class JabonDragEspuma : MonoBehaviour
     public float intervalo = 0.5f;
     public float cantidadLimpieza = 3f;
 
-    public AudioClip sonidoBañandose; 
+    public AudioClip sonidoBañandose;
     private AudioSource audioSource;
 
     private bool arrastrando = false;
@@ -17,38 +17,42 @@ public class JabonDragEspuma : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
-        {
             audioSource = gameObject.AddComponent<AudioSource>();
-        }
+
         audioSource.clip = sonidoBañandose;
-        audioSource.loop = true; 
+        audioSource.loop = true;
         audioSource.playOnAwake = false;
     }
 
     void Update()
     {
-    
         if (arrastrando)
         {
             Vector2 posMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = posMouse;
         }
-       
-        bool debeSonar = tocandoPersonaje && arrastrando && StatsPlayer.instance != null && StatsPlayer.instance.EstaEnBañera;
 
-        if (debeSonar)
+        bool enUso =
+            tocandoPersonaje &&
+            arrastrando &&
+            StatsPlayer.instance != null &&
+            StatsPlayer.instance.EstaEnBañera;
+
+        if (enUso)
         {
             if (!audioSource.isPlaying)
                 audioSource.Play();
 
             temporizador += Time.deltaTime;
+
             if (temporizador >= intervalo)
             {
+                temporizador = 0f;
+
                 if (espumaPrefab != null)
                     Instantiate(espumaPrefab, transform.position, Quaternion.identity);
 
                 StatsPlayer.instance.Bañar(cantidadLimpieza);
-                temporizador = 0f;
             }
         }
         else
@@ -56,7 +60,7 @@ public class JabonDragEspuma : MonoBehaviour
             if (audioSource.isPlaying)
                 audioSource.Stop();
 
-            temporizador = 0f; 
+            temporizador = 0f;
         }
     }
 
@@ -67,9 +71,7 @@ public class JabonDragEspuma : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-        {
             tocandoPersonaje = true;
-        }
     }
 
     void OnTriggerExit2D(Collider2D other)

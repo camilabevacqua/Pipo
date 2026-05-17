@@ -160,13 +160,13 @@ public class MemoryGameManager : MonoBehaviour
 
         GameEconomy.AddCoins(nivelActual.recompensa);
 
-        panelVictoria.SetActive(true);
+        int expGanada = Mathf.RoundToInt(
+            nivelActual.cantidadPares * 2f
+        );
 
-        if (textMonedasVictoria != null)
-        {
-            textMonedasVictoria.text =
-                "+" + nivelActual.recompensa.ToString() + " Coins";
-        }
+        StatsPlayer.instance?.AddExp(expGanada);
+
+        panelVictoria.SetActive(true);
     }
 
     void Perder()
