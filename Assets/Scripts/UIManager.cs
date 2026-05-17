@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     [Header("Audio")]
     public AudioMixer mainMixer;
 
+    [Header("Skins")]
+    public GameObject panelSkins;
+
     [Header("Contenedores")]
     public GameObject uiStatsCasa;
     public GameObject panelAjustes;
@@ -278,6 +281,14 @@ public class UIManager : MonoBehaviour
         {
             coinsText.text =
                 GameEconomy.GetCoins().ToString();
+        }
+    }
+
+    public void AbrirPanelSkins()
+    {
+        if (panelSkins != null)
+        {
+            panelSkins.SetActive(true);
         }
     }
 }
